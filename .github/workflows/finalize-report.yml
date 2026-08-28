@@ -4,7 +4,7 @@ on:
   push:
     branches: [main]
     paths:
-      - '.upload_cont/cont_017.b64'
+      - '.final_tail/seg_10_11.b64'
 
 permissions:
   contents: write
@@ -32,14 +32,30 @@ jobs:
             cat .upload_cont/tail_07.b64
             cat .upload_exact/part_08.b64
             cat .upload_exact/part_09.b64
-            cat .upload_cont/cont_*.b64
+            cat .upload_cont/cont_000.b64
+            cat .upload_cont/cont_001.b64
+            cat .upload_cont/cont_002.b64
+            cat .upload_cont/cont_003.b64
+            cat .upload_cont/cont_004.b64
+            cat .upload_cont/cont_005.b64
+            cat .upload_cont/cont_006.b64
+            cat .upload_cont/cont_007.b64
+            cat .upload_cont/cont_008.b64
+            cat .upload_cont/cont_009.b64
+            cat .upload_cont/cont_010.b64
+            cat .upload_cont/cont_011.b64
+            cat .final_tail/seg_00.b64
+            cat .final_tail/seg_01.b64
+            cat .final_tail/seg_02_05.b64
+            cat .final_tail/seg_06_09.b64
+            cat .final_tail/seg_10_11.b64
           } | tr -d '\r\n' | base64 --decode > From_COVID19_Vaccine_Hesitancy_to_Mpox_Comparative_Synthesis.pdf
           echo '3585c6afcaff9d841a7ef65e55c4d08afbe31aa04396a9dc24b94d5e8ef080eb  From_COVID19_Vaccine_Hesitancy_to_Mpox_Comparative_Synthesis.pdf' | sha256sum --check
 
       - name: Remove temporary upload files
         shell: bash
         run: |
-          rm -rf .upload_exact .upload_chunks .upload_cont .github
+          rm -rf .upload_exact .upload_chunks .upload_cont .final_tail .github
           rm -f .gitkeep
 
       - name: Commit final repository

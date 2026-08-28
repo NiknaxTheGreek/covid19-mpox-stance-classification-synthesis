@@ -4,7 +4,7 @@ on:
   push:
     branches: [main]
     paths:
-      - '.final_tail/seg_10_11.b64'
+      - '.final_tail/seg_04_0_exact.b64'
 
 permissions:
   contents: write
@@ -16,7 +16,7 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
-      - name: Reconstruct and verify PDF
+      - name: Reconstruct and verify exact PDF
         shell: bash
         run: |
           set -euo pipefail
@@ -46,19 +46,30 @@ jobs:
             cat .upload_cont/cont_011.b64
             cat .final_tail/seg_00.b64
             cat .final_tail/seg_01.b64
-            cat .final_tail/seg_02_05.b64
-            cat .final_tail/seg_06_09.b64
+            cat .final_tail/seg_02.b64
+            cat .final_tail/seg_03_0.b64
+            cat .final_tail/seg_03_1.b64
+            cat .final_tail/seg_04_0_exact.b64
+            cat .final_tail/seg_04_1.b64
+            cat .final_tail/seg_05.b64
+            cat .final_tail/seg_06.b64
+            cat .final_tail/seg_07_0.b64
+            cat .final_tail/seg_07_1.b64
+            cat .final_tail/seg_08_0.b64
+            cat .final_tail/seg_08_1.b64
+            cat .final_tail/seg_09.b64
             cat .final_tail/seg_10_11.b64
           } | tr -d '\r\n' | base64 --decode > From_COVID19_Vaccine_Hesitancy_to_Mpox_Comparative_Synthesis.pdf
           echo '3585c6afcaff9d841a7ef65e55c4d08afbe31aa04396a9dc24b94d5e8ef080eb  From_COVID19_Vaccine_Hesitancy_to_Mpox_Comparative_Synthesis.pdf' | sha256sum --check
+          test "$(stat -c%s From_COVID19_Vaccine_Hesitancy_to_Mpox_Comparative_Synthesis.pdf)" -eq 253080
 
       - name: Remove temporary upload files
         shell: bash
         run: |
-          rm -rf .upload_exact .upload_chunks .upload_cont .final_tail .github
+          rm -rf .upload_exact .upload_chunks .upload_cont .final_tail .canonical .github
           rm -f .gitkeep
 
-      - name: Commit final repository
+      - name: Commit final clean repository
         shell: bash
         run: |
           git config user.name 'github-actions[bot]'

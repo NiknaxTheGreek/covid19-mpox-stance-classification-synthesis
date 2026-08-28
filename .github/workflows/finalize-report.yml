@@ -4,7 +4,7 @@ on:
   push:
     branches: [main]
     paths:
-      - '.upload_exact/part_21.b64'
+      - '.upload_cont/cont_017.b64'
 
 permissions:
   contents: write
@@ -20,13 +20,26 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          cat .upload_exact/part_*.b64 | tr -d '\r\n' | base64 --decode > From_COVID19_Vaccine_Hesitancy_to_Mpox_Comparative_Synthesis.pdf
+          {
+            cat .upload_exact/part_00.b64
+            cat .upload_exact/part_01.b64
+            cat .upload_exact/part_02.b64
+            cat .upload_exact/part_03.b64
+            cat .upload_exact/part_04.b64
+            cat .upload_exact/part_05.b64
+            cat .upload_exact/part_06.b64
+            cat .upload_exact/part_07.b64
+            cat .upload_cont/tail_07.b64
+            cat .upload_exact/part_08.b64
+            cat .upload_exact/part_09.b64
+            cat .upload_cont/cont_*.b64
+          } | tr -d '\r\n' | base64 --decode > From_COVID19_Vaccine_Hesitancy_to_Mpox_Comparative_Synthesis.pdf
           echo '3585c6afcaff9d841a7ef65e55c4d08afbe31aa04396a9dc24b94d5e8ef080eb  From_COVID19_Vaccine_Hesitancy_to_Mpox_Comparative_Synthesis.pdf' | sha256sum --check
 
       - name: Remove temporary upload files
         shell: bash
         run: |
-          rm -rf .upload_exact .upload_chunks .github
+          rm -rf .upload_exact .upload_chunks .upload_cont .github
           rm -f .gitkeep
 
       - name: Commit final repository

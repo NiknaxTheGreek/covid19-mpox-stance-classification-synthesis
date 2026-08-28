@@ -4,7 +4,7 @@ on:
   push:
     branches: [main]
     paths:
-      - '.final_tail/seg_04_0_exact.b64'
+      - '.finalize-trigger-v3'
 
 permissions:
   contents: write
@@ -49,7 +49,11 @@ jobs:
             cat .final_tail/seg_02.b64
             cat .final_tail/seg_03_0.b64
             cat .final_tail/seg_03_1.b64
-            cat .final_tail/seg_04_0_exact.b64
+            cat .final_tail/exact500_0.b64
+            cat .final_tail/exact500_1.b64
+            cat .final_tail/exact500_2.b64
+            cat .final_tail/exact500_3.b64
+            cat .final_tail/exact500_4.b64
             cat .final_tail/seg_04_1.b64
             cat .final_tail/seg_05.b64
             cat .final_tail/seg_06.b64
@@ -67,7 +71,7 @@ jobs:
         shell: bash
         run: |
           rm -rf .upload_exact .upload_chunks .upload_cont .final_tail .canonical .github
-          rm -f .gitkeep
+          rm -f .gitkeep .finalize-trigger-v3
 
       - name: Commit final clean repository
         shell: bash

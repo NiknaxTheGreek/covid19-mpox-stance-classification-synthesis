@@ -4,7 +4,7 @@ on:
   push:
     branches: [main]
     paths:
-      - '.pdf_upload/part_035.b64'
+      - '.pdf_delta/part_013.b64'
 
 permissions:
   contents: write
@@ -16,18 +16,19 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
-      - name: Reconstruct and verify updated PDF
+      - name: Apply and verify updated PDF delta
         shell: bash
         run: |
           set -euo pipefail
-          cat .pdf_upload/part_*.b64 | tr -d '\r\n' | base64 --decode > From_COVID19_Vaccine_Hesitancy_to_Mpox_Comparative_Synthesis.pdf
-          echo '24e46f06b1a874bdb0cf3dbc7db3f42b6e7aff7b321622309195f7af4e0c9a5f  From_COVID19_Vaccine_Hesitancy_to_Mpox_Comparative_Synthesis.pdf' | sha256sum --check
-          test "$(stat -c%s From_COVID19_Vaccine_Hesitancy_to_Mpox_Comparative_Synthesis.pdf)" -eq 527970
+          cat .pdf_delta/part_*.b64 | tr -d '\r\n' | base64 --decode > report-delta.bin.gz
+          gzip -dc report-delta.bin.gz >> From_COVID19_Vaccine_Hesitancy_to_Mpox_Comparative_Synthesis.pdf
+          echo '0cb459af1fff7d2023969d95c96ded617f4afb43a212569eddd4ee4660cf4cc3  From_COVID19_Vaccine_Hesitancy_to_Mpox_Comparative_Synthesis.pdf' | sha256sum --check
+          test "$(stat -c%s From_COVID19_Vaccine_Hesitancy_to_Mpox_Comparative_Synthesis.pdf)" -eq 506923
 
       - name: Clean temporary upload files
         shell: bash
         run: |
-          rm -rf .pdf_upload .github
+          rm -rf .pdf_delta .pdf_upload .github report-delta.bin.gz
 
       - name: Commit updated report
         shell: bash

@@ -27,7 +27,7 @@ jobs:
       - name: Clean temporary upload files
         shell: bash
         run: |
-          rm -rf .optimized_upload .pdf_upload .github
+          rm -rf .optimized_upload .pdf_upload .pdf_delta .github
 
       - name: Commit optimized report
         shell: bash

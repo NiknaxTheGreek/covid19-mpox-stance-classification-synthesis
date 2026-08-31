@@ -4,7 +4,7 @@ on:
   push:
     branches: [main]
     paths:
-      - '.optimized_upload/chunk_13.b64'
+      - '.optimized_upload/chunk_12.b64'
 
 permissions:
   contents: write

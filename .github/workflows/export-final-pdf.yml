@@ -1,0 +1,31 @@
+name: Export final COVID-Mpox PDF
+
+on:
+  push:
+    branches: [final-upload]
+    paths:
+      - '.github/workflows/export-final-pdf.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Reconstruct PDF
+        shell: bash
+        run: |
+          set -euo pipefail
+          out=From_COVID19_Vaccine_Hesitancy_to_Mpox_Comparative_Synthesis_FINAL.pdf
+          cat .optimized_upload/chunk_*.b64 | tr -cd 'A-Za-z0-9+/=' | base64 --decode > "$out"
+          file "$out" | grep -q 'PDF document, version 1.5, 12 page'
+          sha256sum "$out"
+          stat -c '%s bytes' "$out"
+      - name: Upload PDF artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: covid-mpox-final-pdf
+          path: From_COVID19_Vaccine_Hesitancy_to_Mpox_Comparative_Synthesis_FINAL.pdf
+          if-no-files-found: error

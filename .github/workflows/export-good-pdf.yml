@@ -1,0 +1,31 @@
+name: Export known-good PDF
+
+on:
+  push:
+    branches: [temp-export-good-pdf]
+    paths:
+      - '.github/workflows/export-good-pdf.yml'
+      - '.export-trigger'
+
+permissions:
+  contents: read
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate PDF
+        shell: bash
+        run: |
+          set -euo pipefail
+          file From_COVID19_Vaccine_Hesitancy_to_Mpox_Comparative_Synthesis.pdf
+          test "$(stat -c%s From_COVID19_Vaccine_Hesitancy_to_Mpox_Comparative_Synthesis.pdf)" -gt 200000
+      - name: Rename final
+        run: cp From_COVID19_Vaccine_Hesitancy_to_Mpox_Comparative_Synthesis.pdf From_COVID19_Vaccine_Hesitancy_to_Mpox_Comparative_Synthesis_FINAL.pdf
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: covid-mpox-good-final
+          path: From_COVID19_Vaccine_Hesitancy_to_Mpox_Comparative_Synthesis_FINAL.pdf
+          if-no-files-found: error

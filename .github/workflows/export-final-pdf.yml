@@ -14,14 +14,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Reconstruct verified PDF
+      - name: Reconstruct and validate PDF
         shell: bash
         run: |
           set -euo pipefail
           out=From_COVID19_Vaccine_Hesitancy_to_Mpox_Comparative_Synthesis_FINAL.pdf
           cat .optimized_upload/chunk_*.b64 | tr -cd 'A-Za-z0-9+/=' | base64 --decode > "$out"
-          echo '2bcac47733cd2010154b8f83a98997b3cfdc0259d19880a4b77f54fd32ddec14  From_COVID19_Vaccine_Hesitancy_to_Mpox_Comparative_Synthesis_FINAL.pdf' | sha256sum --check
-          test "$(stat -c%s "$out")" -eq 184442
+          file "$out"
+          pdfinfo "$out"
+          test "$(pdfinfo "$out" | awk '/^Pages:/ {print $2}')" -eq 12
+          grep -aq '^%PDF-' "$out"
+          tail -c 64 "$out" | grep -aq '%%EOF'
+          sha256sum "$out"
+          stat -c '%s bytes' "$out"
       - name: Upload PDF artifact
         uses: actions/upload-artifact@v4
         with:

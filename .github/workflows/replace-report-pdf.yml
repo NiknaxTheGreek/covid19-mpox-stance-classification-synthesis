@@ -4,7 +4,7 @@ on:
   push:
     branches: [main]
     paths:
-      - '.optimized_upload/chunk_12.b64'
+      - '.final_upload/chunk_13.b64'
 
 permissions:
   contents: write
@@ -20,14 +20,14 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          cat .optimized_upload/chunk_*.b64 | tr -d '\r\n' | base64 --decode > From_COVID19_Vaccine_Hesitancy_to_Mpox_Comparative_Synthesis.pdf
-          echo '2bcac47733cd2010154b8f83a98997b3cfdc0259d19880a4b77f54fd32ddec14  From_COVID19_Vaccine_Hesitancy_to_Mpox_Comparative_Synthesis.pdf' | sha256sum --check
-          test "$(stat -c%s From_COVID19_Vaccine_Hesitancy_to_Mpox_Comparative_Synthesis.pdf)" -eq 184442
+          cat .final_upload/chunk_*.b64 | tr -d '\r\n' | base64 --decode > From_COVID19_Vaccine_Hesitancy_to_Mpox_Comparative_Synthesis.pdf
+          echo '69fa2346ebe49317451efe73076f1013814036e46331ed939a9e7b38ff8a5576  From_COVID19_Vaccine_Hesitancy_to_Mpox_Comparative_Synthesis.pdf' | sha256sum --check
+          test "$(stat -c%s From_COVID19_Vaccine_Hesitancy_to_Mpox_Comparative_Synthesis.pdf)" -eq 522541
 
       - name: Clean temporary upload files
         shell: bash
         run: |
-          rm -rf .optimized_upload .pdf_upload .pdf_delta .github
+          rm -rf .final_upload .optimized_upload .pdf_upload .pdf_delta .github
 
       - name: Commit optimized report
         shell: bash

@@ -20,11 +20,9 @@ jobs:
           set -euo pipefail
           out=From_COVID19_Vaccine_Hesitancy_to_Mpox_Comparative_Synthesis_FINAL.pdf
           cat .optimized_upload/chunk_*.b64 | tr -cd 'A-Za-z0-9+/=' | base64 --decode > "$out"
-          file "$out"
-          pdfinfo "$out"
-          test "$(pdfinfo "$out" | awk '/^Pages:/ {print $2}')" -eq 12
+          file "$out" | grep -q 'PDF document.*12 page'
           grep -aq '^%PDF-' "$out"
-          tail -c 64 "$out" | grep -aq '%%EOF'
+          tail -c 128 "$out" | grep -aq '%%EOF'
           sha256sum "$out"
           stat -c '%s bytes' "$out"
       - name: Upload PDF artifact

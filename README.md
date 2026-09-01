@@ -11,7 +11,7 @@ This repository contains a scientific synthesis of two published collaborative s
 
 The final report is provided as:
 
-`From_COVID19_Vaccine_Hesitancy_to_Mpox_Comparative_Synthesis.pdf`
+`From_COVID19_Vaccine_Hesitancy_to_Mpox_Comparative_Synthesis_FINAL.pdf`
 
 The report integrates the two studies into one comparative methodological narrative rather than treating them as independent case studies. It focuses on the progression from manually labelled COVID-19 vaccine-related Twitter data to transfer and domain-specific fine-tuning for Mpox stance classification.
 

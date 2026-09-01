@@ -4,7 +4,7 @@ on:
   push:
     branches: [main]
     paths:
-      - '.final_patch_upload20/chunk_20.b64'
+      - '.patch200_test/chunk_22.b64'
 
 permissions:
   contents: write
@@ -26,16 +26,16 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          cat .final_patch_upload20/chunk_*.b64 | tr -d '\r\n' | base64 --decode > final.patch.zst
+          cat .patch200_test/chunk_*.b64 | tr -d '\r\n' | base64 --decode > final.patch.zst
           zstd -q -d --patch-from=From_COVID19_Vaccine_Hesitancy_to_Mpox_Comparative_Synthesis.pdf final.patch.zst -o report.new.pdf
-          echo '69fa2346ebe49317451efe73076f1013814036e46331ed939a9e7b38ff8a5576  report.new.pdf' | sha256sum --check
-          test "$(stat -c%s report.new.pdf)" -eq 522541
+          echo '111d0af750ccd1220b57e31368c51c090f785c75606930121ba3ea0a845065fd  report.new.pdf' | sha256sum --check
+          test "$(stat -c%s report.new.pdf)" -eq 223068
           mv report.new.pdf From_COVID19_Vaccine_Hesitancy_to_Mpox_Comparative_Synthesis.pdf
 
       - name: Clean temporary upload files
         shell: bash
         run: |
-          rm -rf final.patch.zst .final_patch_upload20 .final_patch_upload .final_pdf_upload .final_upload .optimized_upload .pdf_upload .pdf_delta .github
+          rm -rf final.patch.zst .patch200_test .final_patch_upload16_test .final_patch_upload20 .final_patch_upload .final_pdf_upload .final_upload .optimized_upload .pdf_upload .pdf_delta .github
 
       - name: Commit optimized report
         shell: bash

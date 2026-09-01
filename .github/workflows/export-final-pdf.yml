@@ -5,7 +5,6 @@ on:
     branches: [final-upload]
     paths:
       - '.github/workflows/export-final-pdf.yml'
-      - '.optimized_upload/export-trigger'
 
 permissions:
   contents: read
@@ -20,10 +19,7 @@ jobs:
         run: |
           set -euo pipefail
           out=From_COVID19_Vaccine_Hesitancy_to_Mpox_Comparative_Synthesis_FINAL.pdf
-          : > "$out"
-          for f in .optimized_upload/chunk_*.b64; do
-            tr -d '\r\n' < "$f" | base64 --decode >> "$out"
-          done
+          cat .optimized_upload/chunk_*.b64 | tr -cd 'A-Za-z0-9+/=' | base64 --decode > "$out"
           echo '2bcac47733cd2010154b8f83a98997b3cfdc0259d19880a4b77f54fd32ddec14  From_COVID19_Vaccine_Hesitancy_to_Mpox_Comparative_Synthesis_FINAL.pdf' | sha256sum --check
           test "$(stat -c%s "$out")" -eq 184442
       - name: Upload PDF artifact

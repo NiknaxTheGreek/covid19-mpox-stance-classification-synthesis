@@ -71,7 +71,7 @@ This repository is a **synthesis of published results**, not a new modelling exp
 
 ## Core publications
 
-1. N. Perikli et al., **“Detecting the Presence of COVID-19 Vaccination Hesitancy From South African Twitter Data Using Machine Learning,”** *IEEE Transactions on Computational Social Systems*, 2025. DOI: **10.1109/TCSS.2025.3608636**.
+1. N. Perikli et al., **“Detecting the Presence of COVID-19 Vaccination Hesitancy From South African Twitter Data Using Machine Learning,”** *IEEE Transactions on Computational Social Systems*, vol. 13, no. 2, pp. 1663–1679, 2026 (DOI assigned online in 2025). DOI: **10.1109/TCSS.2025.3608636**.
 
 2. N. Perikli et al., **“Evaluating automatic annotation of lexicon-based models for stance detection of M-pox tweets from May 1st to Sep 5th, 2022,”** *PLOS Digital Health*, 3(7), e0000545, 2024. DOI: **10.1371/journal.pdig.0000545**.
 
